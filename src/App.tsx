@@ -1,12 +1,8 @@
 import React from "react";
-import { Button } from "antd";
 
 import { GuestHeader, Main } from "layout";
+import RouteWrapper from "routes";
 import styled from "styled-components";
-
-const AntButton = styled(Button)`
-  background: pink;
-`;
 
 const Layout = styled.div`
   display: grid;
@@ -16,13 +12,12 @@ const Layout = styled.div`
     /100vw;
 `;
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <Layout>
       <GuestHeader />
       <Main>
-        <div>aa</div>
-        {/* <AntButton>a</AntButton> */}
+        <RouteWrapper />
       </Main>
     </Layout>
   );

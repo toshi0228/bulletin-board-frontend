@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Text } from "components/atom";
 import { colorCode } from "constance";
+import { path } from "config";
+import { useHistory } from "react-router-dom";
 
 const Container = styled.header`
   background: ${colorCode.navy};
@@ -17,13 +19,25 @@ const Nav = styled.nav`
   gap: 0 20px;
 `;
 
-const GuestHeader = () => {
+const GuestHeader: React.FC = () => {
+  const history = useHistory();
   return (
     <Container>
-      <Text>ゲストヘッダー</Text>
+      <Text
+        cursor={"pointer"}
+        color={colorCode.white}
+        onClick={() => history.push(path.root)}
+      >
+        ゲストヘッダー
+      </Text>
       <Nav>
         {items.map((item, index) => (
-          <Text cursor={"pointer"} color={colorCode.white}>
+          <Text
+            key={index.toString()}
+            cursor={"pointer"}
+            color={colorCode.white}
+            onClick={() => history.push(item.path)}
+          >
             {item.text}
           </Text>
         ))}
@@ -37,7 +51,7 @@ export default GuestHeader;
 const items = [
   {
     text: "みんなの投稿",
-    path: "/",
+    path: path.root,
     func: "",
   },
   {
@@ -47,12 +61,12 @@ const items = [
   },
   {
     text: "Login",
-    path: "/",
+    path: path.signIn,
     func: "",
   },
   {
     text: "Register",
-    path: "/",
+    path: path.signUp,
     func: "",
   },
 ];
