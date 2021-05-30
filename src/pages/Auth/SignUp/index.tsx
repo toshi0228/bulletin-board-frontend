@@ -3,7 +3,8 @@ import styled from "styled-components";
 
 import { Text } from "components/atom";
 import { Button, Form, Input } from "antd";
-import { FormProvider } from "antd/lib/form/context";
+import { signUpApi } from "apis";
+import { SignUpQuery } from "types";
 
 const Container = styled.div`
   width: 400px;
@@ -11,8 +12,9 @@ const Container = styled.div`
 `;
 
 const SignUp: React.FC = () => {
-  const onFinish = (values: any) => {
+  const onFinish = (values: SignUpQuery) => {
     console.log("Success:", values);
+    signUpApi(values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
