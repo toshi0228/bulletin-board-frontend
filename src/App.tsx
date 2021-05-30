@@ -5,10 +5,11 @@ import RouteWrapper from "routes";
 import styled from "styled-components";
 
 const Layout = styled.div`
+  min-height: 100vh;
   display: grid;
   grid-template:
     "header" 56px
-    "main" 200px
+    "main" 1fr
     /100vw;
 `;
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
       <Main>
         <RouteWrapper />
       </Main>
+      <div></div>
     </Layout>
   );
 };
