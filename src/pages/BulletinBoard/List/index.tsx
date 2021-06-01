@@ -1,7 +1,7 @@
 import React from "react";
 
-const TopPage = () => {
+const BulletinBoardList = () => {
   return <div></div>;
 };
 
-export default TopPage;
+export default BulletinBoardList;

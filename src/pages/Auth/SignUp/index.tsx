@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
+import { storage } from "helper";
 import { Text } from "components/atom";
 import { Button, Form, Input } from "antd";
 import { signUpApi } from "apis";
@@ -13,8 +14,11 @@ const Container = styled.div`
 
 const SignUp: React.FC = () => {
   const onFinish = (values: SignUpQuery) => {
-    console.log("Success:", values);
-    signUpApi(values);
+    signUpApi(values).then((res) => {
+      storage.token = res.data.token;
+      alert("ログインに成功しました");
+      window.location.reload();
+    });
   };
 
   const onFinishFailed = (errorInfo: any) => {

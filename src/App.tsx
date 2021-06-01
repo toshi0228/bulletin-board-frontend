@@ -1,8 +1,9 @@
 import React from "react";
 
-import { GuestHeader, Main } from "layout";
+import { GuestHeader, MemeberHeader, Main } from "layout";
 import RouteWrapper from "routes";
 import styled from "styled-components";
+import { storage } from "helper";
 
 const Layout = styled.div`
   min-height: 100vh;
@@ -16,11 +17,10 @@ const Layout = styled.div`
 const App: React.FC = () => {
   return (
     <Layout>
-      <GuestHeader />
+      {storage.token ? <MemeberHeader /> : <GuestHeader />}
       <Main>
         <RouteWrapper />
       </Main>
-      <div></div>
     </Layout>
   );
 };
