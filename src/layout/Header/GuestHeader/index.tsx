@@ -56,7 +56,7 @@ const items = [
   },
   {
     text: "投稿を作成",
-    path: "/",
+    path: path.bulletinBoardCreate,
     func: "",
   },
   {
