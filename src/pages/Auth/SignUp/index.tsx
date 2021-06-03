@@ -17,11 +17,11 @@ const SignUp: React.FC = () => {
     signUpApi(values)
       .then((res) => {
         storage.token = res.data.token;
-        alert("ログインに成功しました");
+        alert("新規登録に成功しました");
         window.location.reload();
       })
       .catch((e) => {
-        alert("ログインに失敗しました");
+        alert("新規登録に失敗しました");
       });
   };
 

@@ -4,3 +4,8 @@ export interface SignUpQuery {
   password: string;
   confirmPasssword: string;
 }
+
+export interface SignInQuery {
+  email: string;
+  password: string;
+}
