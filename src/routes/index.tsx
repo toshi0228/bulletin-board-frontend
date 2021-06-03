@@ -1,21 +1,47 @@
-import { Switch, Route } from "react-router-dom";
+import React, { ReactNode } from "react";
+import { Switch, Route, useHistory } from "react-router-dom";
 import { path } from "config";
-import { BulletinBoardList, BulletinBoardCreate } from "pages/BulletinBoard";
-import { SignIn, SignUp } from "pages/Auth";
+import { userRoutes } from "./userRoutes";
+import { storage } from "helper";
+
+// 認証確認するコンポーネント
+const Auth = ({ children }: { children: ReactNode | any }) => {
+  const history = useHistory();
+  if (!storage.token) {
+    history.push(path.signIn);
+  }
+
+  return children;
+};
 
 const RouteWrapper: React.FC = () => {
   return (
     <Switch>
-      <Route exact path={path.root} component={BulletinBoardList} />
-
-      <Route
-        exact
-        path={path.bulletinBoardCreate}
-        component={BulletinBoardCreate}
-      />
-
-      <Route path={path.signIn} component={SignIn} />
-      <Route path={path.signUp} component={SignUp} />
+      {userRoutes.map((route) => {
+        return (
+          <Route
+            exact={route.exact}
+            path={route.path}
+            render={(props) => {
+              return route.authentication ? (
+                <Auth>
+                  <Route
+                    exact={route.exact}
+                    path={route.path}
+                    component={route.component}
+                  />
+                </Auth>
+              ) : (
+                <Route
+                  exact={route.exact}
+                  path={route.path}
+                  component={route.component}
+                />
+              );
+            }}
+          />
+        );
+      })}
     </Switch>
   );
 };

@@ -14,11 +14,15 @@ const Container = styled.div`
 
 const SignUp: React.FC = () => {
   const onFinish = (values: SignUpQuery) => {
-    signUpApi(values).then((res) => {
-      storage.token = res.data.token;
-      alert("ログインに成功しました");
-      window.location.reload();
-    });
+    signUpApi(values)
+      .then((res) => {
+        storage.token = res.data.token;
+        alert("ログインに成功しました");
+        window.location.reload();
+      })
+      .catch((e) => {
+        alert("ログインに失敗しました");
+      });
   };
 
   const onFinishFailed = (errorInfo: any) => {

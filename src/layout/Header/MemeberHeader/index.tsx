@@ -43,7 +43,7 @@ const MemberHeader = () => {
       </Text>
       <Nav>
         {items.map((item, index) => {
-          if (item.path == path.signIn) {
+          if (item.path === path.signIn) {
             return (
               <Select placeholder={item.text}>
                 <Option value="jack">
