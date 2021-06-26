@@ -45,7 +45,7 @@ const MemberHeader = () => {
         {items.map((item, index) => {
           if (item.path === path.signIn) {
             return (
-              <Select placeholder={item.text}>
+              <Select placeholder={item.text} key={index.toString()}>
                 <Option value="jack">
                   <Text cursor="pointer" onClick={logout}>
                     Sign Out

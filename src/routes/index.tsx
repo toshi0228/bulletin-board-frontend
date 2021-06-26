@@ -17,9 +17,10 @@ const Auth = ({ children }: { children: ReactNode | any }) => {
 const RouteWrapper: React.FC = () => {
   return (
     <Switch>
-      {userRoutes.map((route) => {
+      {userRoutes.map((route, index) => {
         return (
           <Route
+            key={index.toString()}
             exact={route.exact}
             path={route.path}
             render={(props) => {
