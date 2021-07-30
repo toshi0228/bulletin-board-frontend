@@ -4,6 +4,14 @@ export interface BulletinBoardQuery {
   contents: string;
 }
 
+// 編集する時の掲示板データ
+export interface BulletinBoardEditQuery {
+  id: number;
+  userId?: number; // サーバー側でJWTから取得する
+  title: string;
+  contents: string;
+}
+
 // fetchしてくる掲示板情報
 export interface BulletinBoardType {
   id: number;

@@ -1,5 +1,9 @@
 import { path } from "config";
-import { BulletinBoardList, BulletinBoardCreate } from "pages/BulletinBoard";
+import {
+  BulletinBoardList,
+  BulletinBoardCreate,
+  BulletinBoardEdit,
+} from "pages/BulletinBoard";
 import { SignIn, SignUp } from "pages/Auth";
 
 export const userRoutes = [
@@ -13,6 +17,12 @@ export const userRoutes = [
     exact: true,
     path: path.bulletinBoardCreate,
     component: BulletinBoardCreate,
+    authentication: true,
+  },
+  {
+    exact: true,
+    path: path.bulletinBoardEdit(":id"),
+    component: BulletinBoardEdit,
     authentication: true,
   },
   {
