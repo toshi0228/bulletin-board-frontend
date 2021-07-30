@@ -1,8 +1,14 @@
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { HeartOutlined } from "@ant-design/icons";
+import { Button as AntButton } from "antd";
 import { Text } from "components/atom";
+import { UserContext } from "context";
+import { useHistory } from "react-router-dom";
+import { path } from "config";
 
 interface IPostCardProps {
+  id: number;
   title: string;
   contents: string;
   contributor: string;
@@ -14,6 +20,7 @@ const Container = styled.div`
   padding: 24px;
   width: 100%;
   margin-top: 24px;
+  cursor: pointer;
 `;
 
 const GoogIconWrapper = styled.div`
@@ -21,26 +28,50 @@ const GoogIconWrapper = styled.div`
   align-items: center;
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  margin-top: 16px;
+  gap: 16px;
+`;
+
+const Button = styled(AntButton)`
+  width: 96px;
+`;
+
 const PostCard = (porps: IPostCardProps) => {
-  const { title, contents, contributor, like } = porps;
+  const { id, title, contents, contributor, like } = porps;
+  const history = useHistory();
+  console.log({ id });
+
+  const { userName, setUserName } = useContext(UserContext);
+
   return (
     <Container>
-      <Text fs={20}>{title}</Text>
-      <Text fs={14} mt={8}>
+      <Text fs={20} cursor="pointer">
+        {title}
+      </Text>
+      <Text fs={14} mt={8} cursor="pointer">
         {contents}
       </Text>
-      <Text fs={14} mt={8}>
+      <Text fs={14} mt={8} cursor="pointer">
         投稿者: {contributor}
       </Text>
 
       <GoogIconWrapper>
-        <Text>
+        <Text cursor="pointer">
           <HeartOutlined />
         </Text>
-        <Text ml={4} fs={14}>
+        <Text ml={4} fs={14} cursor="pointer">
           {like}
         </Text>
       </GoogIconWrapper>
+
+      <ButtonWrapper>
+        <Button onClick={() => history.push(path.bulletinBoardEdit(id))}>
+          編集する
+        </Button>
+        <Button>削除</Button>
+      </ButtonWrapper>
     </Container>
   );
 };

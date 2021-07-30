@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Form, Button, Input } from "antd";
 
@@ -7,6 +7,7 @@ import { storage } from "helper";
 import { signInApi } from "apis";
 import { SignInQuery } from "types";
 import { path } from "config";
+import { UserContext } from "context";
 
 const Container = styled.div`
   width: 400px;
@@ -14,10 +15,17 @@ const Container = styled.div`
 `;
 
 const SignIn: React.FC = () => {
+  const { setUserName, userName } = useContext(UserContext);
+
+  useEffect(() => {}, [setUserName, userName]);
+  console.log("signInPage:", userName);
+
   const onFinish = (values: SignInQuery) => {
     signInApi(values)
-      .then(async (res) => {
+      .then((res) => {
         storage.token = res.data.token;
+        storage.name = res.data.userName;
+
         alert("ログインに成功しました");
         window.location.pathname = path.root;
       })

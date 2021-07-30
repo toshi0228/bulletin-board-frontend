@@ -32,6 +32,9 @@ const MemberHeader = () => {
     window.location.reload();
   };
 
+  console.log("layout");
+  console.log(storage.name);
+
   return (
     <Container>
       <Text
@@ -45,7 +48,11 @@ const MemberHeader = () => {
         {items.map((item, index) => {
           if (item.path === path.signIn) {
             return (
-              <Select placeholder={item.text} key={index.toString()}>
+              <Select
+                placeholder={item.text}
+                key={index.toString()}
+                style={{ width: 80 }}
+              >
                 <Option value="jack">
                   <Text cursor="pointer" onClick={logout}>
                     Sign Out
@@ -85,7 +92,7 @@ const items = [
     func: "",
   },
   {
-    text: "ユーザー名",
+    text: storage.name,
     path: path.signIn,
     func: "",
   },

@@ -12,10 +12,13 @@ const Container = styled.div`
 
 const BulletinBoardCreate = () => {
   const onFinish = (values: any) => {
-    createBulletinBoardApi(values).then((res) => {
-      console.log(res);
-    });
-    console.log("Success:", values);
+    createBulletinBoardApi(values)
+      .then((res) => {
+        alert("作成しました");
+      })
+      .catch((e) => {
+        alert("作成に失敗しました");
+      });
   };
 
   const onFinishFailed = (errorInfo: any) => {
