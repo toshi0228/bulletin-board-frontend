@@ -1,7 +1,17 @@
 import axios from "axios";
 import { host } from "config";
-import { BulletinBoardQuery, BulletinBoardEditQuery } from "types";
+import {
+  BulletinBoardQuery,
+  BulletinBoardEditQuery,
+  GetBulletinBoardByIdResponse,
+} from "types";
 import { storage } from "helper";
+
+export const getByIdBulletinBoardApi = ({ id }: { id: number }) => {
+  return axios.get<GetBulletinBoardByIdResponse>(
+    `${host}/bulletin-board/${id}`
+  );
+};
 
 export const getListBulletinBoardApi = () => {
   return axios.get(`${host}/bulletin-board`);

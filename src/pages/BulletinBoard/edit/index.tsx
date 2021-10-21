@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Text } from "components/atom";
 import { Button, Form, Input } from "antd";
-import { editBulletinBoardApi } from "apis";
+import { editBulletinBoardApi, getByIdBulletinBoardApi } from "apis";
+import { GetBulletinBoardByIdResponse } from "../../../types";
+import BulletinBoardEditPage from "./edit";
 
 const Container = styled.div`
   width: 80%;
@@ -11,11 +13,15 @@ const Container = styled.div`
 `;
 
 const BulletinBoardEdit = (props: any) => {
-  useEffect(() => {
-    console.log("呼ばれる");
-  }, []);
-
   const id = Number(props.match.params.id);
+  const [bulletinBoard, setBulletinBoard] =
+    useState<GetBulletinBoardByIdResponse | null>();
+
+  useEffect(() => {
+    getByIdBulletinBoardApi({ id }).then((res) => {
+      setBulletinBoard(res.data);
+    });
+  }, []);
 
   const onFinish = (values: any) => {
     editBulletinBoardApi({ id, ...values })
@@ -33,7 +39,11 @@ const BulletinBoardEdit = (props: any) => {
 
   return (
     <Container>
-      <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
+      <Form
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        initialValues={{ title: bulletinBoard?.title || "aa" }}
+      >
         <Text>タイトル</Text>
         <Form.Item
           name="title"
@@ -54,6 +64,10 @@ const BulletinBoardEdit = (props: any) => {
           編集完了
         </Button>
       </Form>
+
+      <div>{bulletinBoard?.title}</div>
+
+      <BulletinBoardEditPage />
     </Container>
   );
 };
