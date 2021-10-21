@@ -21,6 +21,7 @@ const SignUp: React.FC = () => {
         window.location.reload();
       })
       .catch((e) => {
+        console.log(e);
         alert("新規登録に失敗しました");
       });
   };

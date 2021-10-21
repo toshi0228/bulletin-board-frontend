@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Text } from "components/atom";
 import { Button, Form, Input } from "antd";
 import { editBulletinBoardApi } from "apis";
-import { match } from "react-router-dom";
 
 const Container = styled.div`
   width: 80%;
@@ -12,6 +11,10 @@ const Container = styled.div`
 `;
 
 const BulletinBoardEdit = (props: any) => {
+  useEffect(() => {
+    console.log("呼ばれる");
+  }, []);
+
   const id = Number(props.match.params.id);
 
   const onFinish = (values: any) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { PostCard } from "components/molecule";
-import { getBulletinBoardListApi } from "apis";
+import { getListBulletinBoardApi } from "apis";
 import { BulletinBoardType } from "types";
 
 const Container = styled.div`
@@ -14,7 +14,7 @@ const BulletinBoardList = () => {
   const [posts, setPosts] = useState<BulletinBoardType[]>([]);
 
   useEffect(() => {
-    getBulletinBoardListApi().then((res) => setPosts(res.data));
+    getListBulletinBoardApi().then((res) => setPosts(res.data));
   }, []);
 
   return (

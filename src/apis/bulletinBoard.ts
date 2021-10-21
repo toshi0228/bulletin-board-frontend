@@ -3,7 +3,7 @@ import { host } from "config";
 import { BulletinBoardQuery, BulletinBoardEditQuery } from "types";
 import { storage } from "helper";
 
-export const getBulletinBoardListApi = () => {
+export const getListBulletinBoardApi = () => {
   return axios.get(`${host}/bulletin-board`);
 };
 
