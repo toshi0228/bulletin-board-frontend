@@ -18,7 +18,6 @@ const SignIn: React.FC = () => {
   const { setUserName, userName } = useContext(UserContext);
 
   useEffect(() => {}, [setUserName, userName]);
-  console.log("signInPage:", userName);
 
   const onFinish = (values: SignInQuery) => {
     signInApi(values)

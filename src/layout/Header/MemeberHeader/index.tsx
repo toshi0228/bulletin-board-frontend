@@ -32,9 +32,6 @@ const MemberHeader = () => {
     window.location.reload();
   };
 
-  console.log("layout");
-  console.log(storage.name);
-
   return (
     <Container>
       <Text
