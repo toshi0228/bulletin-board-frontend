@@ -6,6 +6,7 @@ import { Text } from "components/atom";
 import { UserContext } from "context";
 import { useHistory } from "react-router-dom";
 import { path } from "config";
+import { storage } from "helper";
 
 interface IPostCardProps {
   id: number;
@@ -41,8 +42,6 @@ const Button = styled(AntButton)`
 const PostCard = (porps: IPostCardProps) => {
   const { id, title, contents, contributor, like } = porps;
   const history = useHistory();
-  console.log({ id });
-
   const { userName, setUserName } = useContext(UserContext);
 
   return (
@@ -66,12 +65,16 @@ const PostCard = (porps: IPostCardProps) => {
         </Text>
       </GoogIconWrapper>
 
-      <ButtonWrapper>
-        <Button onClick={() => history.push(path.bulletinBoardEdit(id))}>
-          編集する
-        </Button>
-        <Button>削除</Button>
-      </ButtonWrapper>
+      {contributor === storage.name ? (
+        <ButtonWrapper>
+          <Button onClick={() => history.push(path.bulletinBoardEdit(id))}>
+            編集する
+          </Button>
+          <Button>削除</Button>
+        </ButtonWrapper>
+      ) : (
+        <></>
+      )}
     </Container>
   );
 };
