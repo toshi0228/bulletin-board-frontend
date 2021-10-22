@@ -28,3 +28,9 @@ export const editBulletinBoardApi = (query: BulletinBoardEditQuery) => {
   axios.defaults.headers.common["Authorization"] = storage.token;
   return axios.patch(`${host}/bulletin-board/edit/${query.id}`, query);
 };
+
+// ポストカードの削除
+export const deleteByIdBulletinBoardApi = (id: string) => {
+  axios.defaults.headers.common["Authorization"] = storage.token;
+  return axios.delete(`${host}/bulletin-board/delete/${id}`);
+};

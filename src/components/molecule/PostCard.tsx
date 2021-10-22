@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { HeartOutlined } from "@ant-design/icons";
-import { Button as AntButton } from "antd";
+import { Button as AntButton, message } from "antd";
 import { Text } from "components/atom";
 import { UserContext } from "context";
 import { useHistory } from "react-router-dom";
 import { path } from "config";
 import { storage } from "helper";
+import { deleteByIdBulletinBoardApi } from "apis";
 
 interface IPostCardProps {
   id: number;
@@ -44,6 +45,15 @@ const PostCard = (porps: IPostCardProps) => {
   const history = useHistory();
   const { userName, setUserName } = useContext(UserContext);
 
+  const deletePostCard = (id: string) => {
+    deleteByIdBulletinBoardApi(id)
+      .then((res) => {
+        message.success("削除しました");
+        setTimeout(() => window.location.reload(), 1000);
+      })
+      .catch(() => message.error("削除に失敗しました"));
+  };
+
   return (
     <Container>
       <Text fs={20} cursor="pointer">
@@ -70,7 +80,7 @@ const PostCard = (porps: IPostCardProps) => {
           <Button onClick={() => history.push(path.bulletinBoardEdit(id))}>
             編集する
           </Button>
-          <Button>削除</Button>
+          <Button onClick={() => deletePostCard(id.toString())}>削除</Button>
         </ButtonWrapper>
       ) : (
         <></>
