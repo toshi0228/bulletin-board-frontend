@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Text } from "components/atom";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { editBulletinBoardApi, getByIdBulletinBoardApi } from "apis";
 import { GetBulletinBoardByIdResponse } from "../../../types";
-import BulletinBoardEditPage from "./edit";
 
 const Container = styled.div`
   width: 80%;
@@ -13,6 +12,7 @@ const Container = styled.div`
 `;
 
 const BulletinBoardEdit = (props: any) => {
+  const [form] = Form.useForm();
   const id = Number(props.match.params.id);
   const [bulletinBoard, setBulletinBoard] =
     useState<GetBulletinBoardByIdResponse | null>();
@@ -20,16 +20,21 @@ const BulletinBoardEdit = (props: any) => {
   useEffect(() => {
     getByIdBulletinBoardApi({ id }).then((res) => {
       setBulletinBoard(res.data);
+      form.setFieldsValue({ title: res.data.title });
     });
   }, []);
+
+  useEffect(() => {
+    form.setFieldsValue(bulletinBoard);
+  }, [bulletinBoard]);
 
   const onFinish = (values: any) => {
     editBulletinBoardApi({ id, ...values })
       .then((res) => {
-        alert("編集しました");
+        message.success("編集しました");
       })
       .catch((e) => {
-        alert("編集に失敗しました");
+        message.error("編集に失敗しました");
       });
   };
 
@@ -39,11 +44,7 @@ const BulletinBoardEdit = (props: any) => {
 
   return (
     <Container>
-      <Form
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        initialValues={{ title: bulletinBoard?.title || "aa" }}
-      >
+      <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <Text>タイトル</Text>
         <Form.Item
           name="title"
@@ -64,10 +65,6 @@ const BulletinBoardEdit = (props: any) => {
           編集完了
         </Button>
       </Form>
-
-      <div>{bulletinBoard?.title}</div>
-
-      <BulletinBoardEditPage />
     </Container>
   );
 };
