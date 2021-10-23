@@ -8,12 +8,14 @@ import {
 import { storage } from "helper";
 
 export const getByIdBulletinBoardApi = ({ id }: { id: number }) => {
+  axios.defaults.headers.common["Authorization"] = storage.token;
   return axios.get<GetBulletinBoardByIdResponse>(
     `${host}/bulletin-board/${id}`
   );
 };
 
 export const getListBulletinBoardApi = () => {
+  axios.defaults.headers.common["Authorization"] = storage.token;
   return axios.get(`${host}/bulletin-board`);
 };
 
