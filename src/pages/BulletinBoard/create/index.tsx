@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Text } from "components/atom";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { createBulletinBoardApi } from "apis";
+import { useHistory } from "react-router";
+import { path } from "config/path";
 
 const Container = styled.div`
   width: 80%;
@@ -11,13 +13,15 @@ const Container = styled.div`
 `;
 
 const BulletinBoardCreate = () => {
+  const history = useHistory();
   const onFinish = (values: any) => {
     createBulletinBoardApi(values)
       .then((res) => {
-        alert("作成しました");
+        message.success("作成しました");
+        setTimeout(() => history.push(path.root), 1000);
       })
       .catch((e) => {
-        alert("作成に失敗しました");
+        message.error("作成に失敗しました");
       });
   };
 
