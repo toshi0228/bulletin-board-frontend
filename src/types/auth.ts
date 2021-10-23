@@ -5,6 +5,11 @@ export interface SignUpQuery {
   confirmPasssword: string;
 }
 
+export interface SignUpResponse {
+  token: string;
+  name: string;
+}
+
 export interface SignInQuery {
   email: string;
   password: string;

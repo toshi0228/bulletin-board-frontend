@@ -20,6 +20,7 @@ const SignUp: React.FC = () => {
     signUpApi(values)
       .then((res) => {
         storage.token = res.data.token;
+        storage.name = res.data.name;
         message.success("新規登録に成功しました");
         setTimeout(() => (window.location.pathname = "/"), 500);
       })
