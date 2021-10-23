@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 
 import { storage } from "helper";
 import { Text } from "components/atom";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { signUpApi } from "apis";
 import { SignUpQuery } from "types";
+import { path } from "config";
 
 const Container = styled.div`
   width: 400px;
@@ -13,16 +15,16 @@ const Container = styled.div`
 `;
 
 const SignUp: React.FC = () => {
+  const history = useHistory();
   const onFinish = (values: SignUpQuery) => {
     signUpApi(values)
       .then((res) => {
         storage.token = res.data.token;
-        alert("新規登録に成功しました");
-        window.location.reload();
+        message.success("新規登録に成功しました");
+        setTimeout(() => (window.location.pathname = "/"), 500);
       })
       .catch((e) => {
-        console.log(e);
-        alert("新規登録に失敗しました");
+        message.error("新規登録に失敗しました");
       });
   };
 

@@ -19,6 +19,11 @@ class Storage {
   set name(newName: string) {
     storage.setItem(this.userName, newName);
   }
+
+  clear() {
+    storage.clear();
+    console.log("クリアされました");
+  }
 }
 
 export default new Storage();

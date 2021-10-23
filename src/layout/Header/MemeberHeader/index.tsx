@@ -28,7 +28,7 @@ const MemberHeader = () => {
   const { Option } = Select;
 
   const logout = () => {
-    storage.token = "";
+    storage.clear();
     window.location.reload();
   };
 

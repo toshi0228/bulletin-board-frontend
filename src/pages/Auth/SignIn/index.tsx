@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { Form, Button, Input } from "antd";
+import { Form, Button, Input, message } from "antd";
 
 import { Text } from "components/atom";
 import { storage } from "helper";
@@ -24,12 +24,11 @@ const SignIn: React.FC = () => {
       .then((res) => {
         storage.token = res.data.token;
         storage.name = res.data.userName;
-
-        alert("ログインに成功しました");
-        window.location.pathname = path.root;
+        message.success("ログインに成功しました");
+        setTimeout(() => (window.location.pathname = path.root), 1000);
       })
       .catch((e) => {
-        alert("ログインに失敗しました");
+        message.error("ログインに失敗しました");
       });
   };
 
