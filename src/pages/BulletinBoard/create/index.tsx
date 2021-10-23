@@ -21,7 +21,7 @@ const BulletinBoardCreate = () => {
         setTimeout(() => history.push(path.root), 1000);
       })
       .catch((e) => {
-        message.error("作成に失敗しました");
+        message.error(e.response.data);
       });
   };
 

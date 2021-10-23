@@ -40,7 +40,7 @@ const BulletinBoardEdit = (props: any) => {
         setTimeout(() => history.push(path.root), 1000);
       })
       .catch((e) => {
-        message.error("編集に失敗しました");
+        message.error(e.response.data);
       });
   };
 
