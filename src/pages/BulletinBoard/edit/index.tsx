@@ -4,6 +4,8 @@ import { Text } from "components/atom";
 import { Button, Form, Input, message } from "antd";
 import { editBulletinBoardApi, getByIdBulletinBoardApi } from "apis";
 import { GetBulletinBoardByIdResponse } from "../../../types";
+import { useHistory } from "react-router";
+import { path } from "config/path";
 
 const Container = styled.div`
   width: 80%;
@@ -12,10 +14,13 @@ const Container = styled.div`
 `;
 
 const BulletinBoardEdit = (props: any) => {
+  const history = useHistory();
   const [form] = Form.useForm();
   const id = Number(props.match.params.id);
-  const [bulletinBoard, setBulletinBoard] =
-    useState<GetBulletinBoardByIdResponse | null>();
+  const [
+    bulletinBoard,
+    setBulletinBoard,
+  ] = useState<GetBulletinBoardByIdResponse | null>();
 
   useEffect(() => {
     getByIdBulletinBoardApi({ id }).then((res) => {
@@ -32,6 +37,7 @@ const BulletinBoardEdit = (props: any) => {
     editBulletinBoardApi({ id, ...values })
       .then((res) => {
         message.success("編集しました");
+        setTimeout(() => history.push(path.root), 1000);
       })
       .catch((e) => {
         message.error("編集に失敗しました");
