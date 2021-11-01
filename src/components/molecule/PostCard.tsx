@@ -25,7 +25,7 @@ const Container = styled.div`
   cursor: pointer;
 `;
 
-const GoogIconWrapper = styled.div`
+const GoodIconWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
@@ -66,14 +66,14 @@ const PostCard = (porps: IPostCardProps) => {
         投稿者: {contributor}
       </Text>
 
-      <GoogIconWrapper>
+      <GoodIconWrapper>
         <Text cursor="pointer">
           <HeartOutlined />
         </Text>
         <Text ml={4} fs={14} cursor="pointer">
           {like}
         </Text>
-      </GoogIconWrapper>
+      </GoodIconWrapper>
 
       {contributor === storage.name ? (
         <ButtonWrapper>
