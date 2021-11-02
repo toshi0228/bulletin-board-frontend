@@ -14,7 +14,10 @@ const BulletinBoardList = () => {
   const [posts, setPosts] = useState<BulletinBoardType[]>([]);
 
   useEffect(() => {
-    getListBulletinBoardApi().then((res) => setPosts(res.data));
+    getListBulletinBoardApi().then((res) => {
+      console.log(res.data);
+      setPosts(res.data);
+    });
   }, []);
 
   return (
@@ -27,7 +30,7 @@ const BulletinBoardList = () => {
           title={post.title}
           contents={post.contents}
           contributor={post.user.name}
-          like={0}
+          like={post.liked.length}
         />
       ))}
     </Container>

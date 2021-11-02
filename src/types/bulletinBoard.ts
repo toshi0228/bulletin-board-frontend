@@ -29,4 +29,5 @@ export interface BulletinBoardType {
   user: {
     name: string;
   };
+  liked: { id: number }[];
 }
