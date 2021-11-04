@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { HeartOutlined } from "@ant-design/icons";
 import { Button as AntButton, message } from "antd";
@@ -7,7 +7,7 @@ import { UserContext } from "context";
 import { useHistory } from "react-router-dom";
 import { path } from "config";
 import { storage } from "helper";
-import { deleteByIdBulletinBoardApi } from "apis";
+import { deleteByIdBulletinBoardApi, createBulletinBoardLikedApi } from "apis";
 
 interface IPostCardProps {
   id: number;
@@ -44,6 +44,8 @@ const PostCard = (porps: IPostCardProps) => {
   const { id, title, contents, contributor, like } = porps;
   const history = useHistory();
   const { userName, setUserName } = useContext(UserContext);
+  const [isClickGood, setClickGood] = useState<boolean>(false);
+  const [goodNumber, setGoodNumber] = useState<number>(like);
 
   const deletePostCard = (id: string) => {
     deleteByIdBulletinBoardApi(id)
@@ -52,6 +54,15 @@ const PostCard = (porps: IPostCardProps) => {
         setTimeout(() => window.location.reload(), 1000);
       })
       .catch(() => message.error("削除に失敗しました"));
+  };
+
+  const onClickGood = (id: number) => {
+    createBulletinBoardLikedApi(id.toString()).then((res) => {
+      setClickGood(!isClickGood);
+      isClickGood
+        ? setGoodNumber(goodNumber - 1)
+        : setGoodNumber(goodNumber + 1);
+    });
   };
 
   return (
@@ -68,10 +79,13 @@ const PostCard = (porps: IPostCardProps) => {
 
       <GoodIconWrapper>
         <Text cursor="pointer">
-          <HeartOutlined />
+          <HeartOutlined
+            onClick={() => onClickGood(id)}
+            style={{ color: isClickGood ? "pink" : "black" }}
+          />
         </Text>
         <Text ml={4} fs={14} cursor="pointer">
-          {like}
+          {goodNumber}
         </Text>
       </GoodIconWrapper>
 

@@ -25,6 +25,12 @@ export const createBulletinBoardApi = (query: BulletinBoardQuery) => {
   return axios.post(`${host}/bulletin-board/create`, query);
 };
 
+// いいね作成
+export const createBulletinBoardLikedApi = (id: string) => {
+  axios.defaults.headers.common["Authorization"] = storage.token;
+  return axios.post(`${host}/bulletin-board/liked/${id}`);
+};
+
 // ポストカードの編集
 export const editBulletinBoardApi = (query: BulletinBoardEditQuery) => {
   axios.defaults.headers.common["Authorization"] = storage.token;
