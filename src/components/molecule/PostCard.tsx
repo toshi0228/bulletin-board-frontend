@@ -7,7 +7,11 @@ import { UserContext } from "context";
 import { useHistory } from "react-router-dom";
 import { path } from "config";
 import { storage } from "helper";
-import { deleteByIdBulletinBoardApi, createBulletinBoardLikedApi } from "apis";
+import {
+  deleteByIdBulletinBoardApi,
+  createBulletinBoardLikedApi,
+  deleteBulletinBoardLikedApi,
+} from "apis";
 
 interface IPostCardProps {
   id: number;
@@ -56,13 +60,20 @@ const PostCard = (porps: IPostCardProps) => {
       .catch(() => message.error("削除に失敗しました"));
   };
 
-  const onClickGood = (id: number) => {
-    createBulletinBoardLikedApi(id.toString()).then((res) => {
-      setClickGood(!isClickGood);
-      isClickGood
-        ? setGoodNumber(goodNumber - 1)
-        : setGoodNumber(goodNumber + 1);
-    });
+  const onClickGoodIcon = (id: number) => {
+    setClickGood(!isClickGood);
+    if (isClickGood) {
+      setGoodNumber(goodNumber - 1);
+      deleteBulletinBoardLikedApi(id.toString()).then((res) => {
+        console.log("いいね削除");
+      });
+    } else {
+      setGoodNumber(goodNumber + 1);
+
+      createBulletinBoardLikedApi(id.toString()).then((res) => {
+        console.log("いいね");
+      });
+    }
   };
 
   return (
@@ -80,7 +91,7 @@ const PostCard = (porps: IPostCardProps) => {
       <GoodIconWrapper>
         <Text cursor="pointer">
           <HeartOutlined
-            onClick={() => onClickGood(id)}
+            onClick={() => onClickGoodIcon(id)}
             style={{ color: isClickGood ? "pink" : "black" }}
           />
         </Text>

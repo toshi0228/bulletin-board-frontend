@@ -31,6 +31,12 @@ export const createBulletinBoardLikedApi = (id: string) => {
   return axios.post(`${host}/bulletin-board/liked/${id}`);
 };
 
+// いいね削除
+export const deleteBulletinBoardLikedApi = (id: string) => {
+  axios.defaults.headers.common["Authorization"] = storage.token;
+  return axios.delete(`${host}/bulletin-board/liked/${id}`);
+};
+
 // ポストカードの編集
 export const editBulletinBoardApi = (query: BulletinBoardEditQuery) => {
   axios.defaults.headers.common["Authorization"] = storage.token;
