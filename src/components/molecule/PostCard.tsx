@@ -19,6 +19,7 @@ interface IPostCardProps {
   contents: string;
   contributor: string;
   like: number;
+  isLiked: boolean; //いいねしたことがあるかどうか
 }
 
 const Container = styled.div`
@@ -45,11 +46,16 @@ const Button = styled(AntButton)`
 `;
 
 const PostCard = (porps: IPostCardProps) => {
-  const { id, title, contents, contributor, like } = porps;
+  const { id, title, contents, contributor, like, isLiked } = porps;
   const history = useHistory();
   const { userName, setUserName } = useContext(UserContext);
   const [isClickGood, setClickGood] = useState<boolean>(false);
   const [goodNumber, setGoodNumber] = useState<number>(like);
+
+  useEffect(() => {
+    // いいねを押したことがあれば、色をつける
+    setClickGood(isLiked);
+  }, []);
 
   const deletePostCard = (id: string) => {
     deleteByIdBulletinBoardApi(id)
@@ -69,7 +75,6 @@ const PostCard = (porps: IPostCardProps) => {
       });
     } else {
       setGoodNumber(goodNumber + 1);
-
       createBulletinBoardLikedApi(id.toString()).then((res) => {
         console.log("いいね");
       });

@@ -4,6 +4,7 @@ import {
   BulletinBoardQuery,
   BulletinBoardEditQuery,
   GetBulletinBoardByIdResponse,
+  GetBulletinBoardResponse,
 } from "types";
 import { storage } from "helper";
 
@@ -16,7 +17,7 @@ export const getByIdBulletinBoardApi = ({ id }: { id: number }) => {
 
 export const getListBulletinBoardApi = () => {
   axios.defaults.headers.common["Authorization"] = storage.token;
-  return axios.get(`${host}/bulletin-board`);
+  return axios.get<GetBulletinBoardResponse[]>(`${host}/bulletin-board`);
 };
 
 // ポストカードの作成

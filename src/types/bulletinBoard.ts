@@ -4,6 +4,16 @@ export interface BulletinBoardQuery {
   contents: string;
 }
 
+// 掲示板データのリストデータ
+export interface GetBulletinBoardResponse {
+  id: number;
+  userId: number; // サーバー側でJWTから取得する
+  title: string;
+  contents: string;
+  user: { name: string };
+  liked: { id: number; name: string }[];
+}
+
 // 編集する時の掲示板データ
 export interface GetBulletinBoardByIdResponse {
   id: number;
@@ -29,5 +39,5 @@ export interface BulletinBoardType {
   user: {
     name: string;
   };
-  liked: { id: number }[];
+  liked: { id: number; name: string }[];
 }

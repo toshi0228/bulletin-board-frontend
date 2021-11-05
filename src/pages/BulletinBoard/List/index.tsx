@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { PostCard } from "components/molecule";
 import { getListBulletinBoardApi } from "apis";
 import { BulletinBoardType } from "types";
+import { storage } from "helper";
 
 const Container = styled.div`
   width: 80%;
@@ -15,7 +16,6 @@ const BulletinBoardList = () => {
 
   useEffect(() => {
     getListBulletinBoardApi().then((res) => {
-      console.log(res.data);
       setPosts(res.data);
     });
   }, []);
@@ -23,16 +23,24 @@ const BulletinBoardList = () => {
   return (
     <Container>
       みんなの投稿
-      {posts.map((post, index) => (
-        <PostCard
-          key={index.toString()}
-          id={post.id}
-          title={post.title}
-          contents={post.contents}
-          contributor={post.user.name}
-          like={post.liked.length}
-        />
-      ))}
+      {posts.map((post, index) => {
+        // いいねをしたことがあるか
+        const isIGood = post.liked.find((user) => {
+          return user.name === storage.name;
+        });
+
+        return (
+          <PostCard
+            key={index.toString()}
+            id={post.id}
+            title={post.title}
+            contents={post.contents}
+            contributor={post.user.name}
+            like={post.liked.length}
+            isLiked={isIGood ? true : false}
+          />
+        );
+      })}
     </Container>
   );
 };
