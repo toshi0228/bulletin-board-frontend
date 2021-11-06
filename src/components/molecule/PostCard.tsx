@@ -9,8 +9,8 @@ import { path } from "config";
 import { storage } from "helper";
 import {
   deleteByIdBulletinBoardApi,
-  createBulletinBoardLikedApi,
-  deleteBulletinBoardLikedApi,
+  createBulletinBoardLikeApi,
+  deleteBulletinBoardLikeApi,
 } from "apis";
 
 interface IPostCardProps {
@@ -19,7 +19,7 @@ interface IPostCardProps {
   contents: string;
   contributor: string;
   like: number;
-  isLiked: boolean; //いいねしたことがあるかどうか
+  isLike: boolean; //いいねしたことがあるかどうか
 }
 
 const Container = styled.div`
@@ -46,7 +46,7 @@ const Button = styled(AntButton)`
 `;
 
 const PostCard = (porps: IPostCardProps) => {
-  const { id, title, contents, contributor, like, isLiked } = porps;
+  const { id, title, contents, contributor, like, isLike } = porps;
   const history = useHistory();
   const { userName, setUserName } = useContext(UserContext);
   const [isClickGood, setClickGood] = useState<boolean>(false);
@@ -54,7 +54,7 @@ const PostCard = (porps: IPostCardProps) => {
 
   useEffect(() => {
     // いいねを押したことがあれば、色をつける
-    setClickGood(isLiked);
+    setClickGood(isLike);
   }, []);
 
   const deletePostCard = (id: string) => {
@@ -70,12 +70,12 @@ const PostCard = (porps: IPostCardProps) => {
     setClickGood(!isClickGood);
     if (isClickGood) {
       setGoodNumber(goodNumber - 1);
-      deleteBulletinBoardLikedApi(id.toString()).then((res) => {
+      deleteBulletinBoardLikeApi(id.toString()).then((res) => {
         console.log("いいね削除");
       });
     } else {
       setGoodNumber(goodNumber + 1);
-      createBulletinBoardLikedApi(id.toString()).then((res) => {
+      createBulletinBoardLikeApi(id.toString()).then((res) => {
         console.log("いいね");
       });
     }

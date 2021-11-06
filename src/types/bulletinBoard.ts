@@ -11,7 +11,7 @@ export interface GetBulletinBoardResponse {
   title: string;
   contents: string;
   user: { name: string };
-  liked: { id: number; name: string }[];
+  likes: { id: number; name: string }[];
 }
 
 // 編集する時の掲示板データ
@@ -39,5 +39,5 @@ export interface BulletinBoardType {
   user: {
     name: string;
   };
-  liked: { id: number; name: string }[];
+  likes: { id: number; name: string }[];
 }

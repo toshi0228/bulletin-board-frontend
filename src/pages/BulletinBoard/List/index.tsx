@@ -25,7 +25,7 @@ const BulletinBoardList = () => {
       みんなの投稿
       {posts.map((post, index) => {
         // いいねをしたことがあるか
-        const isIGood = post.liked.find((user) => {
+        const isIGood = post.likes.find((user) => {
           return user.name === storage.name;
         });
 
@@ -36,8 +36,8 @@ const BulletinBoardList = () => {
             title={post.title}
             contents={post.contents}
             contributor={post.user.name}
-            like={post.liked.length}
-            isLiked={isIGood ? true : false}
+            like={post.likes.length}
+            isLike={isIGood ? true : false}
           />
         );
       })}

@@ -27,15 +27,15 @@ export const createBulletinBoardApi = (query: BulletinBoardQuery) => {
 };
 
 // いいね作成
-export const createBulletinBoardLikedApi = (id: string) => {
+export const createBulletinBoardLikeApi = (id: string) => {
   axios.defaults.headers.common["Authorization"] = storage.token;
-  return axios.post(`${host}/bulletin-board/liked/${id}`);
+  return axios.post(`${host}/bulletin-board/like/${id}`);
 };
 
 // いいね削除
-export const deleteBulletinBoardLikedApi = (id: string) => {
+export const deleteBulletinBoardLikeApi = (id: string) => {
   axios.defaults.headers.common["Authorization"] = storage.token;
-  return axios.delete(`${host}/bulletin-board/liked/${id}`);
+  return axios.delete(`${host}/bulletin-board/like/${id}`);
 };
 
 // ポストカードの編集
