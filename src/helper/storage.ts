@@ -6,9 +6,9 @@ class Storage {
   private readonly tokenName: string = "token";
   private readonly userName: string = "userName";
 
-  get uid(): string {
+  get uid(): number {
     const token = storage.getItem(this.tokenName) as string;
-    return jwt_decode<{ userId: string }>(token).userId; // jwtのtokenからuidを取得
+    return jwt_decode<{ userId: number }>(token).userId; // jwtのtokenからuidを取得
   }
 
   get token(): string {

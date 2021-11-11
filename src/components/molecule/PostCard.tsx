@@ -12,13 +12,14 @@ import {
   createBulletinBoardLikeApi,
   deleteBulletinBoardLikeApi,
 } from "apis";
+import { log } from "util";
 
 interface IPostCardProps {
-  id: number;
+  id: number; // 掲示板のID
   title: string;
   contents: string;
   contributor: string;
-  like: number;
+  likes: { id: number; userId: number; bulletinBoardId: number }[];
   isLike: boolean; //いいねしたことがあるかどうか
 }
 
@@ -46,11 +47,13 @@ const Button = styled(AntButton)`
 `;
 
 const PostCard = (porps: IPostCardProps) => {
-  const { id, title, contents, contributor, like, isLike } = porps;
+  const { id, title, contents, contributor, likes, isLike } = porps;
   const history = useHistory();
   const { userName, setUserName } = useContext(UserContext);
   const [isClickGood, setClickGood] = useState<boolean>(false);
-  const [goodNumber, setGoodNumber] = useState<number>(like);
+  const [goodNumber, setGoodNumber] = useState<number>(likes.length);
+  const [likeList, setLikeList] =
+    useState<{ id: number; userId: number; bulletinBoardId: number }[]>(likes);
 
   useEffect(() => {
     // いいねを押したことがあれば、色をつける
@@ -66,16 +69,25 @@ const PostCard = (porps: IPostCardProps) => {
       .catch(() => message.error("削除に失敗しました"));
   };
 
-  const onClickGoodIcon = (id: number) => {
+  const onClickGoodIcon = (
+    like: { id: number; userId: number; bulletinBoardId: number }[],
+    postId: number
+  ) => {
     setClickGood(!isClickGood);
+    // すでにいいねを押したことがあるか
     if (isClickGood) {
+      // 記事に紐づくいいねリストから、自分が押したいいねを削除する
+      const like = likeList.find((like) => {
+        return like.bulletinBoardId === postId && like.userId === storage.uid;
+      });
       setGoodNumber(goodNumber - 1);
-      deleteBulletinBoardLikeApi(id.toString()).then((res) => {
+      deleteBulletinBoardLikeApi(like!.id.toString()).then((res) => {
         console.log("いいね削除");
       });
     } else {
       setGoodNumber(goodNumber + 1);
-      createBulletinBoardLikeApi(id.toString()).then((res) => {
+      createBulletinBoardLikeApi(postId.toString()).then((res) => {
+        setLikeList([{ ...likeList, ...res.data }]); // いいねした場合に掲示板に紐づくいいねを追加する
         console.log("いいね");
       });
     }
@@ -96,7 +108,7 @@ const PostCard = (porps: IPostCardProps) => {
       <GoodIconWrapper>
         <Text cursor="pointer">
           <HeartOutlined
-            onClick={() => onClickGoodIcon(id)}
+            onClick={() => onClickGoodIcon(likes, id)}
             style={{ color: isClickGood ? "pink" : "black" }}
           />
         </Text>
