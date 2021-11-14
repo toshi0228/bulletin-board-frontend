@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Text } from "components/atom";
 import { Button, Form, Input, message } from "antd";
@@ -14,6 +14,8 @@ const Container = styled.div`
 
 const BulletinBoardCreate = () => {
   const history = useHistory();
+  const [file, setFile] = useState<any>();
+
   const onFinish = (values: any) => {
     createBulletinBoardApi(values)
       .then((res) => {
@@ -29,6 +31,11 @@ const BulletinBoardCreate = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const fileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target!.files![0];
+    setFile(file);
+  };
+
   return (
     <Container>
       <Form onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -41,11 +48,16 @@ const BulletinBoardCreate = () => {
         </Form.Item>
 
         <Text mt={40}>コンテンツ</Text>
+
         <Form.Item
           name="contents"
           rules={[{ required: true, message: "投稿内容を入力してください" }]}
         >
           <Input.TextArea style={{ height: 280 }} />
+        </Form.Item>
+
+        <Form.Item name={"image"}>
+          <input onChange={(e) => fileSelected(e)} type="file" />
         </Form.Item>
 
         <Button type="primary" htmlType="submit">
