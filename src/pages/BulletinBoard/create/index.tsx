@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Text } from "components/atom";
 import { Button, Form, Input, message } from "antd";
-import { createBulletinBoardApi } from "apis";
+import { createBulletinBoardApi, createBulletinBoardImageApi } from "apis";
 import { useHistory } from "react-router";
 import { path } from "config/path";
 
@@ -31,6 +31,17 @@ const BulletinBoardCreate = () => {
     console.log("Failed:", errorInfo);
   };
 
+  // 画像の登録
+  const submitImage = () => {
+    console.log(file);
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("description", "image画像");
+    createBulletinBoardImageApi(formData).then((res) => {
+      console.log(res);
+    });
+  };
+
   const fileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target!.files![0];
     setFile(file);
@@ -56,9 +67,8 @@ const BulletinBoardCreate = () => {
           <Input.TextArea style={{ height: 280 }} />
         </Form.Item>
 
-        <Form.Item name={"image"}>
-          <input onChange={(e) => fileSelected(e)} type="file" />
-        </Form.Item>
+        <input onChange={(e) => fileSelected(e)} type="file" />
+        <Button onClick={submitImage}>画像を送信</Button>
 
         <Button type="primary" htmlType="submit">
           送信

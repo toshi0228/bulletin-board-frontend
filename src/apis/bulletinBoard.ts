@@ -38,6 +38,15 @@ export const deleteBulletinBoardLikeApi = (id: string) => {
   return axios.delete(`${host}/bulletin-board/like/${id}`);
 };
 
+// 画像を登録
+export const createBulletinBoardImageApi = (formData: any) => {
+  axios.defaults.headers.common["Authorization"] = storage.token;
+  console.log(formData);
+  return axios.post(`${host}/bulletin-board/image`, formData, {
+    headers: { "content-type": "multipart/form-data" },
+  });
+};
+
 // ポストカードの編集
 export const editBulletinBoardApi = (query: BulletinBoardEditQuery) => {
   axios.defaults.headers.common["Authorization"] = storage.token;
